@@ -11,6 +11,8 @@ let snakeArr = [
     {x: 13, y: 15}
 ];
 
+
+
 food = {x: 6, y: 7};
 
 // Game Functions
@@ -147,3 +149,34 @@ window.addEventListener('keydown', e =>{
     }
 
 });
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+window.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeX = touchEndX - touchStartX;
+    const swipeY = touchEndY - touchStartY;
+
+    if (Math.abs(swipeX) > Math.abs(swipeY)) {
+        // Horizontal swipe
+        inputDir.x = (swipeX > 0) ? 1 : -1;
+        inputDir.y = 0;
+    } else {
+        // Vertical swipe
+        inputDir.x = 0;
+        inputDir.y = (swipeY > 0) ? 1 : -1;
+    }
+}
